@@ -12,6 +12,7 @@ import com.eigendaksh.trendingrepositories.R
 import com.eigendaksh.trendingrepositories.di.Injector
 import com.eigendaksh.trendingrepositories.di.ScreenInjector
 import com.eigendaksh.trendingrepositories.ui.ScreenNavigator
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -32,9 +33,9 @@ abstract class BaseActivity: AppCompatActivity() {
 
         Injector.inject(this)
         setContentView(layoutRes())
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val screenContainer = findViewById<ViewGroup>(R.id.screen_container)
-        screenContainer
-                ?: throw NullPointerException("Activity must have a view with id: screen_container")
+        screenContainer ?: throw NullPointerException("Activity must have a view with id: screen_container")
         router = Conductor.attachRouter(this, screenContainer, savedInstanceState)
         screenNavigator.initWithRouter(router, initialScreen())
         monitorBackStack()
@@ -69,6 +70,11 @@ abstract class BaseActivity: AppCompatActivity() {
         if(!screenNavigator.pop()) {
             super.onBackPressed()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     @LayoutRes protected abstract fun layoutRes(): Int
