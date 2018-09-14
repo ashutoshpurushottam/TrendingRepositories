@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class SwiftRepositoriesController : BaseController() {
 
-    @Inject lateinit var presenter: SwiftPythonReposPresenter
+    @Inject lateinit var presenter: TrendingSwiftReposPresenter
     @Inject lateinit var viewModel: TrendingReposViewModel
 
     @BindView(R.id.repoList) lateinit var repoList: RecyclerView

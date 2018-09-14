@@ -9,7 +9,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @ScreenScope
-class SwiftPythonReposPresenter  @Inject constructor(
+class TrendingSwiftReposPresenter  @Inject constructor(
         private val viewModel: TrendingReposViewModel,
         private val repoRequester: RepoRequester) : RepoAdapter.RepoClickedListener {
 
