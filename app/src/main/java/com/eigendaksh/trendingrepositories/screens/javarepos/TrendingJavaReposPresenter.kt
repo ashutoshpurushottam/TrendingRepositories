@@ -1,0 +1,36 @@
+package com.eigendaksh.trendingrepositories.screens.javarepos
+
+import com.eigendaksh.trendingrepositories.data.RepoRequester
+import com.eigendaksh.trendingrepositories.di.ScreenScope
+import com.eigendaksh.trendingrepositories.model.Repo
+import com.eigendaksh.trendingrepositories.screens.RepoAdapter
+import com.eigendaksh.trendingrepositories.screens.TrendingReposViewModel
+import timber.log.Timber
+import javax.inject.Inject
+
+@ScreenScope
+class TrendingJavaReposPresenter @Inject constructor(
+        private val viewModel: TrendingReposViewModel,
+        private val repoRequester: RepoRequester) : RepoAdapter.RepoClickedListener {
+
+
+    init {
+        loadRepos()
+    }
+
+    private fun loadRepos() {
+        repoRequester.getTrendingJavaRepos()
+                .doOnSubscribe {
+                    viewModel.setLoading().accept(true)
+                }
+                .doOnEvent { data, throwable ->
+                    viewModel.setLoading().accept(false)
+                }
+                .subscribe(viewModel.setRepos(), viewModel.onError())
+    }
+
+    override fun onRepoClicked(repo: Repo) {
+        Timber.d("Repository clicked")
+    }
+
+}
