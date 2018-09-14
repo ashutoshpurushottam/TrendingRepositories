@@ -71,8 +71,8 @@ internal class RepoAdapter(private val listener: RepoClickedListener) : Recycler
 
         fun bind(repo: Repo) {
             this.repo = repo
-            repoNameText.text = repo.name
-            repoDescriptionText.text = repo.description
+            repoNameText.text = repo.name.capitalize()
+            repoDescriptionText.text = repo.description.capitalize()
             forkCountText.text = NumberFormat.getInstance().format(repo.forksCount)
             starCountText.text = NumberFormat.getInstance().format(repo.stargazersCount)
         }
