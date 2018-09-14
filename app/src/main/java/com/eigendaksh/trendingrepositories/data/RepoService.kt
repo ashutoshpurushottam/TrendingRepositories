@@ -8,4 +8,11 @@ interface RepoService {
 
     @GET("search/repositories?q=language:java&order=desc&sort=stars")
     fun getTrendingJavaRepos(): Single<TrendingReposResponse>
+
+    @GET("search/repositories?q=language:swift&order=desc&sort=stars")
+    fun getTrendingSwiftRepos(): Single<TrendingReposResponse>
+
+    @GET("search/repositories?q=language:javascript&order=desc&sort=stars")
+    fun getTrendingJavascriptRepos(): Single<TrendingReposResponse>
+
 }

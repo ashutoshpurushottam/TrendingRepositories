@@ -1,4 +1,4 @@
-package com.eigendaksh.trendingrepositories.home
+package com.eigendaksh.trendingrepositories.screens.javarepos
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -9,24 +9,20 @@ import com.eigendaksh.trendingrepositories.R
 import com.eigendaksh.trendingrepositories.base.BaseController
 import com.eigendaksh.trendingrepositories.screens.RepoAdapter
 import com.eigendaksh.trendingrepositories.screens.TrendingReposViewModel
-import com.eigendaksh.trendingrepositories.screens.javarepos.TrendingJavaReposPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
-class ContainerController : BaseController() {
+class JavaRepositoriesController : BaseController(){
 
     @Inject lateinit var presenter: TrendingJavaReposPresenter
     @Inject lateinit var viewModel: TrendingReposViewModel
 
-    @BindView(R.id.repoList)
-    lateinit var repoList: RecyclerView
-    @BindView(R.id.loadingIndicator)
-    lateinit var loadingView: View
-    @BindView(R.id.errorTV)
-    lateinit var errorText: TextView
+    @BindView(R.id.repoList) lateinit var repoList: RecyclerView
+    @BindView(R.id.loadingIndicator) lateinit var loadingView: View
+    @BindView(R.id.errorTV) lateinit var errorText: TextView
 
-    override fun layoutRes(): Int  = R.layout.screen_trending_repos
+    override fun layoutRes(): Int = R.layout.screen_trending_repos
 
     override fun onViewBound(view: View) {
         repoList.layoutManager = LinearLayoutManager(view.context)

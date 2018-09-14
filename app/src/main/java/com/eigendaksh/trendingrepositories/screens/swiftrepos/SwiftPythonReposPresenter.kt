@@ -1,25 +1,22 @@
-package com.eigendaksh.trendingrepositories.screens.javarepos
+package com.eigendaksh.trendingrepositories.screens.swiftrepos
 
 import com.eigendaksh.trendingrepositories.data.RepoRequester
-import com.eigendaksh.trendingrepositories.di.ScreenScope
 import com.eigendaksh.trendingrepositories.model.Repo
 import com.eigendaksh.trendingrepositories.screens.RepoAdapter
 import com.eigendaksh.trendingrepositories.screens.TrendingReposViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
-@ScreenScope
-class TrendingJavaReposPresenter @Inject constructor(
+class SwiftPythonReposPresenter  @Inject constructor(
         private val viewModel: TrendingReposViewModel,
         private val repoRequester: RepoRequester) : RepoAdapter.RepoClickedListener {
-
 
     init {
         loadRepos()
     }
 
     private fun loadRepos() {
-        repoRequester.getTrendingJavaRepos()
+        repoRequester.getTrendingSwiftRepos()
                 .doOnSubscribe {
                     viewModel.setLoading().accept(true)
                 }

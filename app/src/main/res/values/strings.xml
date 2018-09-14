@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">TrendingRepositories</string>
+    <string name="app_name">Trending Repositories</string>
     <string name="api_error_repos">Error loading Repositories</string>
 </resources>

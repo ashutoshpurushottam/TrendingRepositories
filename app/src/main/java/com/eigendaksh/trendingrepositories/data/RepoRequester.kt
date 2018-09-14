@@ -13,4 +13,14 @@ class RepoRequester @Inject constructor(private val service: RepoService) {
                     .map(TrendingReposResponse::repos)
                     .subscribeOn(Schedulers.io())
 
+    fun getTrendingSwiftRepos(): Single<List<Repo>> =
+            service.getTrendingSwiftRepos()
+                    .map(TrendingReposResponse::repos)
+                    .subscribeOn(Schedulers.io())
+
+    fun getTrendingJavaScriptRepos(): Single<List<Repo>> =
+            service.getTrendingJavascriptRepos()
+                    .map(TrendingReposResponse::repos)
+                    .subscribeOn(Schedulers.io())
+
 }
