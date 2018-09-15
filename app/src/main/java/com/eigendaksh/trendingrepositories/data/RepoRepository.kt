@@ -1,5 +1,6 @@
 package com.eigendaksh.trendingrepositories.data
 
+import com.eigendaksh.trendingrepositories.model.Contributor
 import com.eigendaksh.trendingrepositories.model.Repo
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -15,6 +16,9 @@ class RepoRepository @Inject constructor(
     private val cachedTrendingJavaRepos = mutableListOf<Repo>()
     private val cachedTrendingSwiftRepos = mutableListOf<Repo>()
     private val cachedTrendingJavaScriptRepos = mutableListOf<Repo>()
+
+    private val cachedTrendingRepos = mutableListOf<Repo>()
+    private val cachedContributors: MutableMap<String, List<Contributor>> = mutableMapOf()
 
 
     // -------------------- Java ------------------------------- //
@@ -108,6 +112,7 @@ class RepoRepository @Inject constructor(
                 cachedJavaRepo(repoOwner, repoName),
                 apiRepo(repoOwner, repoName))
                 .firstOrError()
+                .subscribeOn(Schedulers.io())
 
     }
 
@@ -127,6 +132,7 @@ class RepoRepository @Inject constructor(
                 cachedSwiftRepo(repoOwner, repoName),
                 apiRepo(repoOwner, repoName))
                 .firstOrError()
+                .subscribeOn(Schedulers.io())
 
     }
 
@@ -146,6 +152,7 @@ class RepoRepository @Inject constructor(
                 cachedJavaScriptRepo(repoOwner, repoName),
                 apiRepo(repoOwner, repoName))
                 .firstOrError()
+                .subscribeOn(Schedulers.io())
 
     }
 
@@ -164,4 +171,30 @@ class RepoRepository @Inject constructor(
     private fun apiRepo(repoOwner: String, repoName: String) : Maybe<Repo> =
         repoRequestProvider.get().getRepo(repoOwner, repoName).toMaybe()
 
+
+
+
+    // ---------------------- API Call for Contributor --------------------------------------//
+
+    fun getContributors(url: String): Single<List<Contributor>> =
+            Maybe.concat(cachedContributors(url),
+                    apiContributors(url))
+                    .firstOrError()
+                    .subscribeOn(Schedulers.io())
+
+    private fun cachedContributors(url: String): Maybe<List<Contributor>> =
+            Maybe.create<List<Contributor>> {
+                if (cachedContributors.containsKey(url)) {
+                    it.onSuccess(cachedContributors[url]!!)
+                }
+                it.onComplete()
+            }
+
+    private fun apiContributors(url: String): Maybe<List<Contributor>> =
+            repoRequestProvider.get()
+                    .getContributors(url)
+                    .doOnSuccess {
+                        cachedContributors[url] = it
+                    }
+                    .toMaybe()
 }

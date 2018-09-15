@@ -1,10 +1,12 @@
 package com.eigendaksh.trendingrepositories.data
 
+import com.eigendaksh.trendingrepositories.model.Contributor
 import com.eigendaksh.trendingrepositories.model.Repo
 import com.eigendaksh.trendingrepositories.model.TrendingReposResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Url
 
 interface RepoService {
 
@@ -20,5 +22,7 @@ interface RepoService {
     @GET("repos/{owner}/{name}")
     fun getTrendingRepo(@Path("owner") repoOwner: String, @Path("name")repoName: String):
             Single<Repo>
+
+    @GET fun getContributors(@Url url: String): Single<List<Contributor>>
 
 }
