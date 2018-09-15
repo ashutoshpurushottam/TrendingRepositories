@@ -1,5 +1,6 @@
 package com.eigendaksh.trendingrepositories.screens.swiftrepos
 
+import com.eigendaksh.trendingrepositories.data.RepoRepository
 import com.eigendaksh.trendingrepositories.data.RepoRequester
 import com.eigendaksh.trendingrepositories.di.ScreenScope
 import com.eigendaksh.trendingrepositories.model.Repo
@@ -11,14 +12,14 @@ import javax.inject.Inject
 @ScreenScope
 class TrendingSwiftReposPresenter  @Inject constructor(
         private val viewModel: TrendingReposViewModel,
-        private val repoRequester: RepoRequester) : RepoAdapter.RepoClickedListener {
+        private val repoRepository: RepoRepository) : RepoAdapter.RepoClickedListener {
 
     init {
         loadRepos()
     }
 
     private fun loadRepos() {
-        repoRequester.getTrendingSwiftRepos()
+        repoRepository.getTrendingSwiftRepos()
                 .doOnSubscribe {
                     viewModel.setLoading().accept(true)
                 }

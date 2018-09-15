@@ -1,5 +1,6 @@
 package com.eigendaksh.trendingrepositories.screens.javarepos
 
+import com.eigendaksh.trendingrepositories.data.RepoRepository
 import com.eigendaksh.trendingrepositories.data.RepoRequester
 import com.eigendaksh.trendingrepositories.di.ScreenScope
 import com.eigendaksh.trendingrepositories.model.Repo
@@ -11,7 +12,7 @@ import javax.inject.Inject
 @ScreenScope
 class TrendingJavaReposPresenter @Inject constructor(
         private val viewModel: TrendingReposViewModel,
-        private val repoRequester: RepoRequester) : RepoAdapter.RepoClickedListener {
+        private val repoRepository: RepoRepository) : RepoAdapter.RepoClickedListener {
 
 
     init {
@@ -19,7 +20,7 @@ class TrendingJavaReposPresenter @Inject constructor(
     }
 
     private fun loadRepos() {
-        repoRequester.getTrendingJavaRepos()
+        repoRepository.getTrendingJavaRepos()
                 .doOnSubscribe {
                     viewModel.setLoading().accept(true)
                 }

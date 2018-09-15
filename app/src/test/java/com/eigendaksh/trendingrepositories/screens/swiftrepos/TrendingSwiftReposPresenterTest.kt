@@ -1,5 +1,6 @@
 package com.eigendaksh.trendingrepositories.screens.swiftrepos
 
+import com.eigendaksh.trendingrepositories.data.RepoRepository
 import com.eigendaksh.trendingrepositories.data.RepoRequester
 import com.eigendaksh.trendingrepositories.model.Repo
 import com.eigendaksh.trendingrepositories.model.TrendingReposResponse
@@ -19,7 +20,7 @@ import java.io.IOException
 
 class TrendingSwiftReposPresenterTest {
 
-    @Mock lateinit var repoRequester: RepoRequester
+    @Mock lateinit var repoRepository: RepoRepository
     @Mock lateinit var viewModel: TrendingReposViewModel
     @Mock lateinit var loadingConsumer: Consumer<Boolean>
     @Mock lateinit var successConsumer: Consumer<List<Repo>>
@@ -40,7 +41,7 @@ class TrendingSwiftReposPresenterTest {
         val repos = setUpSuccess()
         initializePresenter()
 
-        Mockito.verify<RepoRequester>(repoRequester).getTrendingSwiftRepos()
+        Mockito.verify<RepoRepository>(repoRepository).getTrendingSwiftRepos()
         Mockito.verify<Consumer<List<Repo>>>(successConsumer).accept(repos)
         Mockito.verifyZeroInteractions(errorConsumer)
     }
@@ -86,19 +87,19 @@ class TrendingSwiftReposPresenterTest {
         val response = TestUtils.loadJson("mock/get_trending_repos_swift.json", TrendingReposResponse::class.java)
 
         val repos = response.repos
-        Mockito.`when`(repoRequester.getTrendingSwiftRepos()).thenReturn(Single.just(repos))
+        Mockito.`when`(repoRepository.getTrendingSwiftRepos()).thenReturn(Single.just(repos))
 
         return repos
     }
 
     private fun setUpFailure(): Throwable {
         val error = IOException()
-        Mockito.`when`(repoRequester.getTrendingSwiftRepos()).thenReturn(Single.error(error))
+        Mockito.`when`(repoRepository.getTrendingSwiftRepos()).thenReturn(Single.error(error))
         return error
     }
 
     private fun initializePresenter() {
-        presenter = TrendingSwiftReposPresenter(viewModel, repoRequester)
+        presenter = TrendingSwiftReposPresenter(viewModel, repoRepository)
     }
 
 }

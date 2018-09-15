@@ -1,5 +1,6 @@
 package com.eigendaksh.trendingrepositories.screens.javascriptrepos
 
+import com.eigendaksh.trendingrepositories.data.RepoRepository
 import com.eigendaksh.trendingrepositories.data.RepoRequester
 import com.eigendaksh.trendingrepositories.model.Repo
 import com.eigendaksh.trendingrepositories.model.TrendingReposResponse
@@ -19,7 +20,7 @@ import java.io.IOException
 
 class TrendingJavascriptReposPresenterTest {
 
-    @Mock lateinit var repoRequester: RepoRequester
+    @Mock lateinit var repoRepository: RepoRepository
     @Mock lateinit var viewModel: TrendingReposViewModel
     @Mock lateinit var loadingConsumer: Consumer<Boolean>
     @Mock lateinit var successConsumer: Consumer<List<Repo>>
@@ -40,7 +41,7 @@ class TrendingJavascriptReposPresenterTest {
         val repos = setUpSuccess()
         initializePresenter()
 
-        Mockito.verify<RepoRequester>(repoRequester).getTrendingJavaScriptRepos()
+        Mockito.verify<RepoRepository>(repoRepository).getTrendingJavaScriptRepos()
         Mockito.verify<Consumer<List<Repo>>>(successConsumer).accept(repos)
         Mockito.verifyZeroInteractions(errorConsumer)
     }
@@ -86,19 +87,19 @@ class TrendingJavascriptReposPresenterTest {
         val response = TestUtils.loadJson("mock/get_trending_repos_javascript.json", TrendingReposResponse::class.java)
 
         val repos = response.repos
-        Mockito.`when`(repoRequester.getTrendingJavaScriptRepos()).thenReturn(Single.just(repos))
+        Mockito.`when`(repoRepository.getTrendingJavaScriptRepos()).thenReturn(Single.just(repos))
 
         return repos
     }
 
     private fun setUpFailure(): Throwable {
         val error = IOException()
-        Mockito.`when`(repoRequester.getTrendingJavaScriptRepos()).thenReturn(Single.error(error))
+        Mockito.`when`(repoRepository.getTrendingJavaScriptRepos()).thenReturn(Single.error(error))
         return error
     }
 
     private fun initializePresenter() {
-        presenter = TrendingJavascriptReposPresenter(viewModel, repoRequester)
+        presenter = TrendingJavascriptReposPresenter(viewModel, repoRepository)
     }
 
 }

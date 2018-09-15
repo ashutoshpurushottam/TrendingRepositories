@@ -1,5 +1,6 @@
 package com.eigendaksh.trendingrepositories.screens.javarepos
 
+import com.eigendaksh.trendingrepositories.data.RepoRepository
 import com.eigendaksh.trendingrepositories.data.RepoRequester
 import com.eigendaksh.trendingrepositories.model.Repo
 import com.eigendaksh.trendingrepositories.model.TrendingReposResponse
@@ -22,7 +23,7 @@ import org.mockito.Mockito.*
 
 class TrendingJavaReposPresenterTest {
 
-    @Mock lateinit var repoRequester: RepoRequester
+    @Mock lateinit var repoRepository: RepoRepository
     @Mock lateinit var viewModel: TrendingReposViewModel
     @Mock lateinit var loadingConsumer: Consumer<Boolean>
     @Mock lateinit var successConsumer: Consumer<List<Repo>>
@@ -43,7 +44,7 @@ class TrendingJavaReposPresenterTest {
         val repos = setUpSuccess()
         initializePresenter()
 
-        verify<RepoRequester>(repoRequester).getTrendingJavaRepos()
+        verify<RepoRepository>(repoRepository).getTrendingJavaRepos()
         verify<Consumer<List<Repo>>>(successConsumer).accept(repos)
         verifyZeroInteractions(errorConsumer)
     }
@@ -89,19 +90,19 @@ class TrendingJavaReposPresenterTest {
         val response = TestUtils.loadJson("mock/get_trending_repos_java.json", TrendingReposResponse::class.java)
 
         val repos = response.repos
-        `when`(repoRequester.getTrendingJavaRepos()).thenReturn(Single.just(repos))
+        `when`(repoRepository.getTrendingJavaRepos()).thenReturn(Single.just(repos))
 
         return repos
     }
 
     private fun setUpFailure(): Throwable {
         val error = IOException()
-        `when`(repoRequester.getTrendingJavaRepos()).thenReturn(Single.error(error))
+        `when`(repoRepository.getTrendingJavaRepos()).thenReturn(Single.error(error))
         return error
     }
 
     private fun initializePresenter() {
-        presenter = TrendingJavaReposPresenter(viewModel, repoRequester)
+        presenter = TrendingJavaReposPresenter(viewModel, repoRepository)
     }
 
 
