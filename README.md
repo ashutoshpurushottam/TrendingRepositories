@@ -1,6 +1,6 @@
 # Trending Repositories
 ----
-This is a simple Android application written to teach various concepts in Android Development for my OpenClassrooms students. The application demonstrates the following concepts. 
+This is a simple Android application written to teach various concepts in Android Development for OpenClassrooms students. The application demonstrates the following concepts. 
 - MVVM + P architecture for developing large applications.
 - Kotlin 
 - Dependency Injection using Dagger (Application Scope, Activity Scope, and Screen Scope). The application demonstrates how to override default Dagger classes to ensure that the components are not recreated on configuration change.
