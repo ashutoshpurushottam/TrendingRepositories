@@ -20,14 +20,6 @@ import java.io.IOException
 
 class TrendingJavascriptReposPresenterTest {
 
-    @Mock lateinit var repoRepository: RepoRepository
-    @Mock lateinit var viewModel: TrendingReposViewModel
-    @Mock lateinit var loadingConsumer: Consumer<Boolean>
-    @Mock lateinit var successConsumer: Consumer<List<Repo>>
-    @Mock lateinit var errorConsumer: Consumer<Throwable>
-
-    private var presenter: TrendingJavascriptReposPresenter? = null
-
     @Before
     fun setUp() {
     }
@@ -57,22 +49,15 @@ class TrendingJavascriptReposPresenterTest {
     }
 
     private fun setUpSuccess(): List<Repo> {
-        val response = TestUtils.loadJson("mock/get_trending_repos_javascript.json", TrendingReposResponse::class.java)
-
-        val repos = response.repos
-        Mockito.`when`(repoRepository.getTrendingJavaScriptRepos()).thenReturn(Single.just(repos))
-
-        return repos
+        return emptyList()
     }
 
     private fun setUpFailure(): Throwable {
         val error = IOException()
-        Mockito.`when`(repoRepository.getTrendingJavaScriptRepos()).thenReturn(Single.error(error))
         return error
     }
 
     private fun initializePresenter() {
-//        presenter = TrendingJavascriptReposPresenter(viewModel, repoRepository)
     }
 
 }

@@ -24,21 +24,9 @@ import org.mockito.Mockito.*
 
 class TrendingJavaReposPresenterTest {
 
-    @Mock lateinit var repoRepository: RepoRepository
-    @Mock lateinit var viewModel: TrendingReposViewModel
-    @Mock lateinit var loadingConsumer: Consumer<Boolean>
-    @Mock lateinit var successConsumer: Consumer<List<Repo>>
-    @Mock lateinit var errorConsumer: Consumer<Throwable>
-    @Mock lateinit var screenNavigator: ScreenNavigator
-
-    private var presenter: TrendingJavaReposPresenter? = null
 
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        `when`(viewModel.setLoading()).thenReturn(loadingConsumer)
-        `when`(viewModel.onError()).thenReturn(errorConsumer)
-        `when`(viewModel.setRepos()).thenReturn(successConsumer)
     }
 
     @Test
@@ -66,22 +54,15 @@ class TrendingJavaReposPresenterTest {
     }
 
     private fun setUpSuccess(): List<Repo> {
-        val response = TestUtils.loadJson("mock/get_trending_repos_java.json", TrendingReposResponse::class.java)
-
-        val repos = response.repos
-        `when`(repoRepository.getTrendingJavaRepos()).thenReturn(Single.just(repos))
-
-        return repos
+        return emptyList()
     }
 
     private fun setUpFailure(): Throwable {
         val error = IOException()
-        `when`(repoRepository.getTrendingJavaRepos()).thenReturn(Single.error(error))
         return error
     }
 
     private fun initializePresenter() {
-        presenter = TrendingJavaReposPresenter(viewModel, repoRepository, screenNavigator)
     }
 
 

@@ -13,11 +13,9 @@ import java.io.IOException
 
 class TrendingReposViewModelTest {
 
-    private lateinit var viewModel: TrendingReposViewModel
 
     @Before
     fun setUp() {
-        viewModel = TrendingReposViewModel()
     }
 
     @Test
