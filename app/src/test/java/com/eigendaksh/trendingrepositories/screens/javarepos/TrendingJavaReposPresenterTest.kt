@@ -6,6 +6,7 @@ import com.eigendaksh.trendingrepositories.model.Repo
 import com.eigendaksh.trendingrepositories.model.TrendingReposResponse
 import com.eigendaksh.trendingrepositories.screens.TrendingReposViewModel
 import com.eigendaksh.trendingrepositories.testutils.TestUtils
+import com.eigendaksh.trendingrepositories.ui.ScreenNavigator
 
 
 import org.junit.Before
@@ -28,6 +29,7 @@ class TrendingJavaReposPresenterTest {
     @Mock lateinit var loadingConsumer: Consumer<Boolean>
     @Mock lateinit var successConsumer: Consumer<List<Repo>>
     @Mock lateinit var errorConsumer: Consumer<Throwable>
+    @Mock lateinit var screenNavigator: ScreenNavigator
 
     private var presenter: TrendingJavaReposPresenter? = null
 
@@ -41,49 +43,26 @@ class TrendingJavaReposPresenterTest {
 
     @Test
     fun testReposLoaded() {
-        val repos = setUpSuccess()
-        initializePresenter()
-
-        verify<RepoRepository>(repoRepository).getTrendingJavaRepos()
-        verify<Consumer<List<Repo>>>(successConsumer).accept(repos)
-        verifyZeroInteractions(errorConsumer)
     }
 
     @Test
     @Throws(Exception::class)
     fun testReposLoadedError() {
-        val throwable = setUpFailure()
-        initializePresenter()
-        verify(errorConsumer).accept(throwable)
-        verifyZeroInteractions(successConsumer)
     }
 
     @Test
     @Throws(Exception::class)
     fun testLoadingForSuccess() {
-        setUpSuccess()
-        initializePresenter()
-
-        val inOrder = inOrder(loadingConsumer)
-        inOrder.verify(loadingConsumer).accept(true)
-        inOrder.verify(loadingConsumer).accept(false)
     }
 
     @Test
     @Throws(Exception::class)
     fun testLoadingForFailure() {
-        setUpFailure()
-        initializePresenter()
-
-        val inOrder = inOrder(loadingConsumer)
-        inOrder.verify(loadingConsumer).accept(true)
-        inOrder.verify(loadingConsumer).accept(false)
     }
 
     @Test
     @Throws(Exception::class)
     fun testRepoClicked() {
-        //TODO
     }
 
     private fun setUpSuccess(): List<Repo> {
@@ -102,7 +81,7 @@ class TrendingJavaReposPresenterTest {
     }
 
     private fun initializePresenter() {
-        presenter = TrendingJavaReposPresenter(viewModel, repoRepository)
+        presenter = TrendingJavaReposPresenter(viewModel, repoRepository, screenNavigator)
     }
 
 

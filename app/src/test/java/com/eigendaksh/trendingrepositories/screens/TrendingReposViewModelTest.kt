@@ -22,32 +22,15 @@ class TrendingReposViewModelTest {
 
     @Test
     fun testLoading() {
-        val testObserver = viewModel.getLoading().test()
-
-        viewModel.setLoading().accept(true)
-        viewModel.setLoading().accept(false)
-
-        testObserver.assertValues(true, false)
     }
 
     @Test
     fun testReposLoading() {
-        val response = TestUtils.loadJson("mock/get_trending_repos_java.json", TrendingReposResponse::class.java)
-
-        viewModel.setRepos().accept(response.repos)
-
-        viewModel.getRepos().test().assertValue(response.repos)
 
     }
 
     @Test
     fun testError() {
-        val testObserver = viewModel.getError().test()
-
-        viewModel.onError().accept(IOException())
-        viewModel.setRepos().accept(emptyList())
-
-        testObserver.assertValues(R.string.api_error_repos, -1)
     }
 
 

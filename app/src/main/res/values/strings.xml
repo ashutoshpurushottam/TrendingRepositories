@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">Trending Repositories</string>
     <string name="api_error_repos">Error loading Repositories</string>
-    <string name="creation_date_label">Created At</string>
-    <string name="updated_date_label">Updated On</string>
+    <string name="creation_date_label">Created at</string>
+    <string name="updated_date_label">Updated on</string>
     <string name="contributors_label">Contributors</string>
     <string name="api_error_single_repo">Failed to load repository</string>
     <string name="api_error_contributors">Failed to load contributors for the repository</string>
+    <string name="content_description_avatar_image">contributor avatar</string>
 </resources>

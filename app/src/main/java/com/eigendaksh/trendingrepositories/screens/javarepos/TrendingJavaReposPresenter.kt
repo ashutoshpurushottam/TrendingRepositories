@@ -1,18 +1,23 @@
 package com.eigendaksh.trendingrepositories.screens.javarepos
 
+import android.content.Context
 import com.eigendaksh.trendingrepositories.data.RepoRepository
 import com.eigendaksh.trendingrepositories.data.RepoRequester
+import com.eigendaksh.trendingrepositories.details.RepoType
 import com.eigendaksh.trendingrepositories.di.ScreenScope
 import com.eigendaksh.trendingrepositories.model.Repo
 import com.eigendaksh.trendingrepositories.screens.RepoAdapter
 import com.eigendaksh.trendingrepositories.screens.TrendingReposViewModel
+import com.eigendaksh.trendingrepositories.ui.DefaultScreenNavigator
+import com.eigendaksh.trendingrepositories.ui.ScreenNavigator
 import timber.log.Timber
 import javax.inject.Inject
 
 @ScreenScope
 class TrendingJavaReposPresenter @Inject constructor(
         private val viewModel: TrendingReposViewModel,
-        private val repoRepository: RepoRepository) : RepoAdapter.RepoClickedListener {
+        private val repoRepository: RepoRepository,
+        private val screenNavigator: ScreenNavigator) : RepoAdapter.RepoClickedListener {
 
 
     init {
@@ -30,8 +35,7 @@ class TrendingJavaReposPresenter @Inject constructor(
                 .subscribe(viewModel.setRepos(), viewModel.onError())
     }
 
-    override fun onRepoClicked(repo: Repo) {
-        Timber.d("Repository clicked")
+    override fun onRepoClicked(context: Context, repo: Repo) {
+        screenNavigator.goToRepoDetails(context, RepoType.Java, repo.owner.login, repo.name)
     }
-
 }

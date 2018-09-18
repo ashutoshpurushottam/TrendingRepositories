@@ -1,4 +1,4 @@
-package com.eigendaksh.trendingrepositories.model
+package com.eigendaksh.trendingrepositories.state
 
 data class RepoDetailsState constructor(val loading: Boolean = false,
                                         val name: String? = null,

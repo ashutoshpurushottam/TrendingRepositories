@@ -5,7 +5,7 @@ import com.eigendaksh.trendingrepositories.di.ScreenScope
 import com.eigendaksh.trendingrepositories.model.Contributor
 import com.eigendaksh.trendingrepositories.model.ContributorState
 import com.eigendaksh.trendingrepositories.model.Repo
-import com.eigendaksh.trendingrepositories.model.RepoDetailsState
+import com.eigendaksh.trendingrepositories.state.RepoDetailsState
 import com.jakewharton.rxrelay2.BehaviorRelay
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer

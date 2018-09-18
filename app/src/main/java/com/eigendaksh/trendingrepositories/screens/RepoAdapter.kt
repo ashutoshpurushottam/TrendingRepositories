@@ -1,5 +1,6 @@
 package com.eigendaksh.trendingrepositories.screens
 
+import android.content.Context
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -65,7 +66,7 @@ internal class RepoAdapter(private val listener: RepoClickedListener) : Recycler
         init {
             ButterKnife.bind(this, itemView)
             itemView.setOnClickListener { view ->
-                listener.onRepoClicked(repo)
+                listener.onRepoClicked(view.context, repo)
             }
         }
 
@@ -80,6 +81,6 @@ internal class RepoAdapter(private val listener: RepoClickedListener) : Recycler
 
     internal interface RepoClickedListener {
 
-        fun onRepoClicked(repo: Repo)
+        fun onRepoClicked(context: Context, repo: Repo)
     }
 }
